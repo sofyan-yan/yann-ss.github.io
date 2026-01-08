@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Platform Pro</title>
+
+<style>
+:root {
+  --bg: #020617;
+  --card: #020617;
+  --primary: #2563eb;
+  --text: #e5e7eb;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(135deg, #020617, #020617);
+  color: var(--text);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #020617;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+select {
+  background: #020617;
+  color: white;
+  border: 1px solid #020617;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+main {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #020617;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #020617;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+textarea {
+  width: 100%;
+  height: 120px;
+  background: #020617;
+  color: white;
+  border: 1px solid #020617;
+  border-radius: 8px;
+  padding: 10px;
+  resize: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: var(--primary);
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.output {
+  margin-top: 15px;
+  padding: 10px;
+  background: #020617;
+  border-radius: 8px;
+  min-height: 80px;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 1rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo" id="appTitle">AI Platform Pro</div>
+  <select id="langSwitcher">
+    <option value="en">English</option>
+    <option value="id">Indonesia</option>
+    <option value="ar">العربية</option>
+  </select>
+</header>
+
+<main>
+  <div class="card">
+    <h2 id="chatTitle">AI Chat</h2>
+    <textarea id="prompt" placeholder="Ask the AI..."></textarea>
+    <button onclick="runAI()" id="generateBtn">Generate</button>
+    <div class="output" id="output"></div>
+  </div>
+
+  <div class="card">
+    <h2 id="videoTitle">AI Video</h2>
+    <p id="videoDesc">Generate AI video (Pro feature)</p>
+    <button disabled>Coming Soon</button>
+  </div>
+</main>
+
+<footer>
+  © 2026 AI Platform – Pro Edition
+</footer>
+
+<script>
+/* ===== MULTI LANGUAGE (IN ONE HTML) ===== */
+const LANG = {
+  en: {
+    appTitle: "AI Platform Pro",
+    chatTitle: "AI Chat",
+    videoTitle: "AI Video",
+    videoDesc: "Generate AI video (Pro feature)",
+    placeholder: "Ask the AI...",
+    generate: "Generate",
+    thinking: "AI is thinking..."
+  },
+  id: {
+    appTitle: "Platform AI Pro",
+    chatTitle: "Chat AI",
+    videoTitle: "Video AI",
+    videoDesc: "Generate video AI (Fitur Pro)",
+    placeholder: "Tanyakan ke AI...",
+    generate: "Generate",
+    thinking: "AI sedang berpikir..."
+  },
+  ar: {
+    appTitle: "منصة الذكاء الاصطناعي الاحترافية",
+    chatTitle: "محادثة الذكاء الاصطناعي",
+    videoTitle: "فيديو الذكاء الاصطناعي",
+    videoDesc: "إنشاء فيديو بالذكاء الاصطناعي (ميزة احترافية)",
+    placeholder: "اسأل الذكاء الاصطناعي...",
+    generate: "إنشاء",
+    thinking: "الذكاء الاصطناعي يفكر..."
+  }
+};
+
+const switcher = document.getElementById("langSwitcher");
+
+function setLang(lang) {
+  const t = LANG[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  appTitle.innerText = t.appTitle;
+  chatTitle.innerText = t.chatTitle;
+  videoTitle.innerText = t.videoTitle;
+  videoDesc.innerText = t.videoDesc;
+  prompt.placeholder = t.placeholder;
+  generateBtn.innerText = t.generate;
+}
+
+switcher.addEventListener("change", e => setLang(e.target.value));
+
+setLang("en");
+
+/* ===== AI FUNCTION (API READY) ===== */
+function runAI() {
+  const text = prompt.value;
+  if (!text) return;
+
+  output.innerText = LANG[switcher.value].thinking;
+
+  // 🔌 HUBUNGKAN KE API DI SINI
+  setTimeout(() => {
+    output.innerText = "AI Response:\n\n" + text;
+  }, 1200);
+}
+</script>
+
+</body>
+</html>
